@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MT Site Sheet</title>
+<meta name="theme-color" content="#2a78d6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MT Site">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+/* Phones: one column of cards in the order of the paper layout sheet. Small tablets and wider: two columns. */
+:root {
+  --bg: #f4f6f9; --panel: #ffffff; --ink: #1d2330; --muted: #5d6b82; --line: #cfd6e1; --soft: #e6ebf2;
+  --accent: #2a78d6; --accent-ink: #ffffff; --warn: #b26a00; --bad: #c0392b; --good: #1e8449;
+  --body: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, "Roboto Mono", monospace;
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg: #11161f; --panel: #1a212d; --ink: #e6ebf3; --muted: #94a1b5; --line: #2f3a4b; --soft: #242e3d;
+  --accent: #5aa9ff; --accent-ink: #06203f; --warn: #ffb020; --bad: #ff5a4f; --good: #4cd07d; color-scheme: dark } }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 500 16px/1.35 var(--body);
+  padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 560px; margin: 0 auto; padding-block: 12px 40px; }
+header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+h1 { font: 700 1.4rem/1 var(--body); margin: 0; }
+.clock { font: 500 .9rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: grid; gap: 10px;
+  margin-bottom: 12px; break-inside: avoid; }
+h2 { font: 700 .95rem var(--body); margin: 0; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.row { display: flex; gap: 8px; align-items: end; flex-wrap: wrap; }
+label { display: grid; gap: 3px; font-size: .74rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); flex: 1 1 84px; min-width: 0; }
+label.wide { flex-basis: 100%; }
+label.check { display: flex; align-items: center; gap: 10px; font-size: 1rem; text-transform: none; letter-spacing: 0; color: var(--ink); min-height: 44px; }
+label.check input { width: 26px; height: 26px; min-height: 0; flex: none; accent-color: var(--accent); }
+input, select, textarea { font: 600 1.05rem var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 10px; padding: 9px 10px; min-height: 46px; width: 100%; }
+input[type=date] { min-width: 0; padding-inline: 6px; font-size: .95rem; }
+textarea { min-height: 96px; font-weight: 500; resize: vertical; }
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, canvas:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+.btns { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.btn { font: 600 1rem var(--body); border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 10px;
+  padding: 9px 14px; min-height: 46px; cursor: pointer; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.danger { color: var(--bad); border-color: var(--bad); }
+.btn.now { flex: none; }
+.pill { display: inline-block; font: 700 .72rem var(--body); letter-spacing: .07em; text-transform: uppercase; padding: 3px 9px;
+  border-radius: 99px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+.pill.good { background: var(--good); color: var(--panel); }
+.pill.warn { background: var(--warn); color: var(--panel); }
+.hint { color: var(--muted); font-size: .9rem; margin: 0; }
+.toast { min-height: 1.2em; color: var(--good); font-weight: 600; }
+table.grid { width: 100%; border-collapse: separate; border-spacing: 4px; table-layout: fixed; margin: -4px; width: calc(100% + 8px); }
+table.grid th { font: 700 .8rem var(--body); color: var(--muted); text-align: center; padding: 0; overflow-wrap: anywhere; }
+table.grid th.rh { text-align: left; width: 5.2em; font-size: .78rem; }
+table.grid.el th.rh { width: 2.6em; font-size: .95rem; color: var(--ink); }
+table.grid td { padding: 0; }
+table.grid td.na { text-align: center; color: var(--muted); }
+table.grid input { text-align: center; padding: 8px 2px; font: 600 1rem var(--mono); font-variant-numeric: tabular-nums; }
+.paper { position: relative; width: 100%; max-width: 440px; margin: 0 auto; aspect-ratio: 1; }
+canvas { position: absolute; inset: 0; width: 100%; height: 100%; background: #ffffff; border: 1px solid var(--line); border-radius: 8px;
+  touch-action: none; cursor: crosshair; }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+.thumbs:empty { display: none; }
+.thumb { position: relative; margin: 0; }
+.thumb img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); background: var(--soft); }
+.thumb button { position: absolute; top: 4px; right: 4px; min-height: 36px; min-width: 36px; padding: 2px 8px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--panel); color: var(--bad); font: 700 .9rem var(--body); cursor: pointer; }
+.thumb figcaption { font-size: .78rem; color: var(--muted); }
+@media (min-width: 760px) {
+  .wrap { max-width: 1040px; }
+  .cols { columns: 2; column-gap: 12px; }
+}
+@media print {
+  :root { --bg: #fff; --panel: #fff; --ink: #000; --muted: #333; --line: #888; --soft: #eee; color-scheme: light; }
+  body { font-size: 11px; padding: 0; }
+  .noprint, .btn, .toast, .hint { display: none !important; }
+  .wrap { max-width: none; padding: 0; }
+  .cols { columns: 2; column-gap: 10px; }
+  .card { border-radius: 0; padding: 6px; margin-bottom: 6px; gap: 5px; }
+  input, select, textarea { min-height: 0; padding: 2px 4px; font-size: 11px; border-radius: 0; }
+  table.grid input { padding: 2px; font-size: 11px; }
+  .paper { max-width: 260px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>MT Site Sheet</h1>
+    <div class="clock noprint" id="utc"></div>
+  </header>
+
+  <section class="card noprint" aria-label="Sites">
+    <div class="head"><h2>Sites on this device</h2><span id="status" class="pill"></span></div>
+    <select id="sites" aria-label="Site shown"></select>
+    <div class="btns">
+      <button class="btn primary" id="new">New site</button>
+      <button class="btn danger" id="del">Delete</button>
+    </div>
+    <p class="hint">A new site starts blank, with today's date and a GPS fix from this device.</p>
+  </section>
+
+  <div class="cols">
+  <section class="card" aria-label="Site">
+    <h2>Site</h2>
+    <div class="row">
+      <label class="wide">Project <input data-k="project" autocomplete="off"></label>
+      <label>Site # <input data-k="site" autocomplete="off" autocapitalize="characters"></label>
+      <label>Date <input data-k="date" type="date"></label>
+    </div>
+    <div class="row">
+      <label>Logger <input data-k="logger" autocomplete="off" list="loggers" placeholder="ADU-11e"></label>
+      <label>Logger SN <input data-k="sn" inputmode="numeric" autocomplete="off"></label>
+      <datalist id="loggers"><option>ADU-11e</option><option>ADU-08e</option><option>ADU-07e</option></datalist>
+    </div>
+    <div class="row">
+      <label>North ref.
+        <select data-k="nref"><option value="true">True</option><option value="magnetic">Magnetic</option></select>
+      </label>
+      <label>Declination (°) <input data-k="decl" inputmode="text" autocomplete="off" placeholder="− west"></label>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Position">
+    <h2>Position</h2>
+    <div class="row">
+      <label>Latitude <input data-k="lat" autocomplete="off" placeholder="54:53.785 N"></label>
+      <label>Longitude <input data-k="lon" autocomplete="off" placeholder="35:00.409 E"></label>
+    </div>
+    <div class="row">
+      <label>Elev (m) <input data-k="elev" inputmode="decimal" autocomplete="off"></label>
+      <label>Acc (m) <input data-k="acc" inputmode="decimal" autocomplete="off"></label>
+    </div>
+    <div class="btns"><button class="btn primary" id="gps">GPS fix</button><span class="hint" id="gmsg" style="display:block;flex:1;min-width:0">Takes the position from this device. Stand at the logger.</span></div>
+    <label class="check"><input type="checkbox" data-k="gpslock"> GPS lock achieved on the logger</label>
+  </section>
+
+  <section class="card" aria-label="Equipment">
+    <h2>Equipment</h2>
+    <div class="row">
+      <label>SD card / storage # <input data-k="storage" autocomplete="off"></label>
+      <label>GPS antenna # <input data-k="gpsant" autocomplete="off"></label>
+      <label>GPS cable # <input data-k="gpscable" autocomplete="off"></label>
+    </div>
+    <div class="row">
+      <label>Battery # <input data-k="batt" autocomplete="off"></label>
+      <label>Battery V <input data-k="battv" inputmode="decimal" autocomplete="off"></label>
+      <label>Battery cable # <input data-k="battcable" autocomplete="off"></label>
+    </div>
+    <div class="row">
+      <label>Compass SN <input data-k="compass" autocomplete="off"></label>
+      <label>Electrode type <input data-k="eltype" autocomplete="off" list="eltypes" placeholder="EFP-06"></label>
+      <datalist id="eltypes"><option>EFP-06</option></datalist>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Recording">
+    <h2>Recording</h2>
+    <div class="row">
+      <label class="wide">Sample rates / bands <input data-k="rate" autocomplete="off" placeholder="e.g. 128 Hz, 4096 Hz"></label>
+      <label>Chopper <select data-k="chopper"><option value=""></option><option>On</option><option>Off</option><option>Auto</option></select></label>
+      <label>Filters <input data-k="filter" autocomplete="off"></label>
+    </div>
+    <div class="row">
+      <label>E gain <input data-k="egain" autocomplete="off"></label>
+      <label>H gain <input data-k="hgain" autocomplete="off"></label>
+    </div>
+    <label>Job / run name <input data-k="run" autocomplete="off"></label>
+  </section>
+
+  <section class="card" aria-label="Sketch">
+    <div class="head"><h2>Site sketch</h2>
+      <div class="btns"><button class="btn" id="undo">Undo</button><button class="btn danger" id="wipe">Clear</button></div></div>
+    <div class="paper"><canvas id="sk" tabindex="0" aria-label="Sketch of the layout: draw with a finger or pen"></canvas></div>
+    <label>Sketch note <input data-k="sketchnote" autocomplete="off" placeholder="e.g. 110 m east of plan, avoid swamp"></label>
+  </section>
+
+  <section class="card" aria-label="Pictures">
+    <div class="head"><h2>Pictures</h2><span id="pcount" class="pill">0</span></div>
+    <div class="thumbs" id="thumbs"></div>
+    <div class="btns noprint">
+      <button class="btn primary" id="pcam">Take a picture</button>
+      <button class="btn" id="pgal">Add from gallery</button>
+      <input type="file" id="pcamf" accept="image/*" capture="environment" hidden>
+      <input type="file" id="pgalf" accept="image/*" multiple hidden>
+    </div>
+    <div class="toast" id="ptoast" role="status"></div>
+  </section>
+
+  <section class="card" aria-label="Dipoles">
+    <h2>Dipoles</h2>
+    <div id="t-dip"></div>
+    <p class="hint">Length fills in from the electrode distances (N + S, E + W) until you type it.</p>
+  </section>
+
+  <section class="card" aria-label="Electrodes">
+    <h2>Electrodes</h2>
+    <div id="t-el"></div>
+  </section>
+
+  <section class="card" aria-label="Sensors">
+    <h2>Sensors</h2>
+    <label>Coil type <input data-k="coil" autocomplete="off" list="coils" placeholder="MFS-06e, MFS-07e …"></label>
+    <datalist id="coils"><option>MFS-06e</option><option>MFS-07e</option><option>MFS-10e</option><option>MFS-11e</option><option>MFS-12e</option></datalist>
+    <div id="t-h"></div>
+  </section>
+
+  <section class="card" aria-label="Crew">
+    <h2>Crew and start</h2>
+    <div class="row">
+      <label>Technician <input data-k="tech" autocomplete="off"></label>
+      <label>Assistant <input data-k="asst" autocomplete="off"></label>
+    </div>
+    <div class="row">
+      <label>Laid out (UTC) <input data-k="t_in" autocomplete="off" placeholder="YYYY-MM-DD HH:MM"></label>
+      <button class="btn now" data-now="t_in">Now</button>
+    </div>
+  </section>
+
+  <section class="card" aria-label="Retrieval">
+    <h2>Status on equipment retrieval</h2>
+    <div id="t-ret"></div>
+    <div class="row">
+      <label>Battery V <input data-k="r_battv" inputmode="decimal" autocomplete="off"></label>
+      <label style="flex-basis:50%">Retrieved (UTC) <input data-k="t_out" autocomplete="off" placeholder="YYYY-MM-DD HH:MM"></label>
+      <button class="btn now" data-now="t_out">Now</button>
+    </div>
+    <label>Notes <textarea data-k="notes"></textarea></label>
+  </section>
+  </div>
+
+  <section class="card noprint" aria-label="Files">
+    <h2>Files</h2>
+    <p class="hint">Saves every site on this device as one sheet file (.json, with the sketches, for the MT Site Viewer on the computer) and one table (.csv).</p>
+    <div class="btns">
+      <button class="btn primary" id="share">Save / share files</button>
+      <button class="btn" id="copy">Copy CSV</button>
+      <button class="btn" id="print">Print / PDF</button>
+      <button class="btn" id="imp">Load a sheet file</button>
+      <input type="file" id="impf" accept=".json,application/json,text/plain" hidden>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <textarea id="csvout" hidden readonly aria-label="CSV"></textarea>
+  </section>
+</div>
+
+<script>
+(function () {
+  const KEY = 'mtsite.v1';
+  const $ = id => document.getElementById(id);
+  const pad = n => String(n).padStart(2, '0');
+  const utc = ms => { const d = new Date(ms); return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) + ' ' + pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()); };
+  const today = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  const num = v => { const f = parseFloat(String(v).replace(',', '.').replace('−', '-')); return isFinite(f) ? f : null; };
+
+  // ---- the sheet's tables: key = <column>_<row> (dipoles, sensors, retrieval) or <electrode>_<field> ----
+  const DIP = [['len', 'Length (m)'], ['k', 'kΩ'], ['ac', 'AC (mV)'], ['dc', 'DC (mV)'], ['az', 'Azimuth °']];
+  const RET = [['k', 'kΩ'], ['ac', 'AC (mV)'], ['dc', 'DC (mV)']];
+  const HS = [['sn', 'Serial'], ['az', 'Azimuth °'], ['cable', 'Cable #']];
+  const EL = [['g', 'Gnd'], ['n', 'N'], ['s', 'S'], ['e', 'E'], ['w', 'W']];
+  const ELF = [['k', 'kΩ'], ['dist', 'Dist m'], ['inc', 'Incl °'], ['pot', 'Pot #'], ['cable', 'Cable #']];
+  const NA = { hz_az: 1, g_k: 1, g_inc: 1 };          // dashes on the paper sheet
+  const TEXTCELL = { sn: 1, pot: 1, cable: 1 };
+  function table(host, cls, rows, cols, key, aria) {
+    let h = '<table class="grid ' + cls + '"><tr><th class="rh"></th>' + cols.map(c => '<th scope="col">' + c[1] + '</th>').join('') + '</tr>';
+    rows.forEach(r => { h += '<tr><th class="rh" scope="row">' + r[1] + '</th>' + cols.map(c => {
+      const k = key(r[0], c[0]), f = k.split('_').pop();
+      return NA[k] ? '<td class="na">–</td>' : '<td><input data-k="' + k + '" autocomplete="off" inputmode="' + (TEXTCELL[f] ? 'text' : 'decimal') + '" aria-label="' + aria(r[1], c[1]) + '"></td>';
+    }).join('') + '</tr>'; });
+    $(host).innerHTML = h + '</table>';
+  }
+  table('t-dip', '', DIP, [['ex', 'Ex'], ['ey', 'Ey']], (r, c) => c + '_' + r, (r, c) => c + ' ' + r);
+  table('t-ret', '', RET, [['ex', 'Ex'], ['ey', 'Ey']], (r, c) => 'r_' + c + '_' + r, (r, c) => c + ' ' + r + ' at retrieval');
+  table('t-h', '', HS, [['hx', 'Hx'], ['hy', 'Hy'], ['hz', 'Hz']], (r, c) => c + '_' + r, (r, c) => c + ' ' + r);
+  table('t-el', 'el', EL, ELF, (r, c) => r + '_' + c, (r, c) => r + ' ' + c);
+
+  // every column of the CSV, in the order of the paper sheet (lat_dd / lon_dd are worked out from lat / lon)
+  const KEYS = ['project', 'site', 'date', 'logger', 'sn', 'nref', 'decl', 'lat', 'lon', 'lat_dd', 'lon_dd', 'elev', 'acc', 'gpslock',
+    'storage', 'gpsant', 'gpscable', 'batt', 'battv', 'battcable', 'compass', 'eltype', 'rate', 'chopper', 'filter', 'egain', 'hgain', 'run']
+    .concat(...['ex', 'ey'].map(c => DIP.map(r => c + '_' + r[0])))
+    .concat('coil', ...['hx', 'hy', 'hz'].map(c => HS.map(r => c + '_' + r[0]).filter(k => !NA[k])))
+    .concat(...EL.map(r => ELF.map(c => r[0] + '_' + c[0]).filter(k => !NA[k])))
+    .concat('tech', 'asst', 't_in', 'r_ex_k', 'r_ex_ac', 'r_ex_dc', 'r_ey_k', 'r_ey_ac', 'r_ey_dc', 'r_battv', 't_out', 'sketchnote', 'notes', 'pictures');
+  // fields that offer what earlier sites on this device used (a new site itself starts blank)
+  const SUGGEST = { project: [], tech: [], asst: [], sn: [], logger: ['ADU-11e', 'ADU-08e', 'ADU-07e'], eltype: ['EFP-06'], rate: [],
+    coil: ['MFS-06e', 'MFS-07e', 'MFS-10e', 'MFS-11e', 'MFS-12e'] };
+  Object.keys(SUGGEST).forEach(k => {
+    const dl = document.createElement('datalist'); dl.id = 'dl-' + k; document.body.appendChild(dl);
+    document.querySelectorAll('[data-k="' + k + '"]').forEach(el => el.setAttribute('list', dl.id));
+  });
+
+  // decimal degrees from "54:53.785 N", "54 53 47.1 N", "-35.0068" ... ('' when it cannot be read)
+  function dd(v, max) {
+    let s = String(v || '').trim().toUpperCase().replace('−', '-');
+    if (/^-?\d+,\d+$/.test(s)) s = s.replace(',', '.');
+    if (!s) return '';
+    const neg = /[SW]/.test(s) || s[0] === '-';
+    const p = s.replace(/[NSEW]/g, '').replace(/^-/, '').split(/[^0-9.]+/).filter(Boolean).map(Number);
+    if (!p.length || p.length > 3 || p.some(x => !isFinite(x))) return '';
+    const x = p[0] + (p[1] || 0) / 60 + (p[2] || 0) / 3600;
+    return x > max ? '' : String(+((neg ? -1 : 1) * x).toFixed(7));
+  }
+
+  // A site that has not been written on yet (mod 0) is blank: only today's date. It is not saved to the files.
+  const blank = () => ({ id: 's' + Date.now(), mod: 0, date: today(), nref: 'true' });
+  let S;
+  try { S = JSON.parse(localStorage.getItem(KEY)); } catch (e) { S = null; }
+  if (!S || !Array.isArray(S.sites) || !S.sites.length) { S = { sites: [blank()] }; S.cur = S.sites[0].id; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { toast('This device would not store the sheet: save the files now.'); } };
+  const cur = () => S.sites.find(s => s.id === S.cur) || (S.cur = S.sites[0].id, S.sites[0]);
+  const touch = c => { c.mod = Date.now(); };
+  const retrieved = s => !!(s.t_out || s.r_battv || s.r_ex_k || s.r_ey_k);
+  const title = s => (s.site || 'no site #') + ' · ' + (s.date || '') + (s.project ? ' · ' + s.project : '');
+  let armDel = false, armWipe = false, armPic = null;
+
+  function toast(t, el) { el = el || $('toast'); el.textContent = t; clearTimeout(el.h); el.h = setTimeout(() => el.textContent = '', 5000); }
+
+  // ---- pictures: scaled-down JPEGs kept in the device's IndexedDB (too big for localStorage); a site lists their ids ----
+  const PH = {};                               // id -> data URL, all loaded at start so saving the files needs no waiting
+  let dbp = null;
+  const db = () => dbp || (dbp = new Promise((ok, no) => {
+    const r = indexedDB.open('mtsite', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('photos');
+    r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error);
+  }));
+  const pstore = (mode, fn) => db().then(d => new Promise((ok, no) => {
+    const t = d.transaction('photos', mode), rq = fn(t.objectStore('photos'));
+    t.oncomplete = () => ok(rq && rq.result); t.onerror = t.onabort = () => no(t.error);
+  }));
+  const pput = (id, v) => { PH[id] = v; return pstore('readwrite', s => s.put(v, id)); };
+  const pdel = id => { delete PH[id]; return pstore('readwrite', s => s.delete(id)).catch(() => {}); };
+  function shrink(file) {                      // -> JPEG data URL, longest side 1600 px
+    return new Promise((ok, no) => {
+      const img = new Image(), url = URL.createObjectURL(file);
+      img.onload = () => {
+        const k = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas');
+        c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+        ok(c.toDataURL('image/jpeg', 0.75));
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); no(new Error('not a picture')); };
+      img.src = url;
+    });
+  }
+  async function addPictures(input) {
+    const c = cur(), files = [...input.files]; input.value = '';
+    for (const f of files) {
+      try {
+        const data = await shrink(f), id = 'p' + Date.now() + Math.random().toString(36).slice(2, 6);
+        await pput(id, data);
+        (c.photos = c.photos || []).push({ id, t: utc(Date.now()) }); touch(c); save();
+      } catch (e) { toast('That picture could not be stored on this device.', $('ptoast')); }
+    }
+    render();
+  }
+  function renderPictures(c) {
+    const list = c.photos || [], host = $('thumbs'); host.innerHTML = '';
+    $('pcount').textContent = String(list.length);
+    list.forEach((p, i) => {
+      const f = document.createElement('figure'); f.className = 'thumb';
+      const im = document.createElement('img'); im.alt = 'Picture ' + (i + 1) + ' of this site'; if (PH[p.id]) im.src = PH[p.id];
+      const b = document.createElement('button'); b.className = 'noprint'; b.textContent = armPic === p.id ? 'Delete?' : '×';
+      b.setAttribute('aria-label', 'Delete picture ' + (i + 1));
+      b.onclick = () => {
+        if (armPic !== p.id) { armPic = p.id; render(); setTimeout(() => { if (armPic === p.id) { armPic = null; render(); } }, 4000); return; }
+        armPic = null; c.photos = list.filter(x => x !== p); pdel(p.id); touch(c); save(); render();
+      };
+      const cap = document.createElement('figcaption'); cap.textContent = p.t ? p.t + ' UTC' : '';
+      f.append(im, b, cap); host.appendChild(f);
+    });
+  }
+  $('pcam').onclick = () => $('pcamf').click();
+  $('pgal').onclick = () => $('pgalf').click();
+  $('pcamf').onchange = () => addPictures($('pcamf'));
+  $('pgalf').onchange = () => addPictures($('pgalf'));
+
+  function render() {
+    const c = cur();
+    document.querySelectorAll('[data-k]').forEach(el => {
+      if (el === document.activeElement && el.type !== 'checkbox') return;
+      if (el.type === 'checkbox') el.checked = !!c[el.dataset.k]; else el.value = c[el.dataset.k] || (el.dataset.k === 'nref' ? 'true' : '');
+    });
+    const ey = $('t-dip').querySelector('[data-k="ey_az"]'), ax = num(c.ex_az);
+    ey.placeholder = ax === null ? '' : String((ax + 90) % 360);
+    const sel = $('sites'); sel.innerHTML = '';
+    S.sites.slice().sort((a, b) => (b.date || '').localeCompare(a.date || '') || (a.site || '').localeCompare(b.site || '')).forEach(s => {
+      const o = document.createElement('option'); o.value = s.id; o.textContent = title(s) + (retrieved(s) ? ' ✓' : ''); sel.appendChild(o); });
+    sel.value = c.id;
+    const st = $('status'); st.textContent = !c.mod ? 'blank' : retrieved(c) ? 'retrieved' : 'laid out';
+    st.className = 'pill' + (c.mod && retrieved(c) ? ' good' : '');
+    Object.keys(SUGGEST).forEach(k => {
+      const vals = [...new Set(SUGGEST[k].concat(S.sites.map(s => s[k]).filter(Boolean)))];
+      const dl = $('dl-' + k); dl.innerHTML = ''; vals.forEach(v => { const o = document.createElement('option'); o.value = v; dl.appendChild(o); });
+    });
+    renderPictures(c);
+    $('del').textContent = armDel ? 'Tap again to delete this site' : 'Delete';
+    $('wipe').textContent = armWipe ? 'Tap again' : 'Clear';
+    document.title = (c.site ? c.site + ' - ' : '') + 'MT Site Sheet';
+    draw();
+  }
+
+  // ---- entries ----
+  function autoLen(c) {                         // Ex = N + S, Ey = E + W, until a length is typed
+    [['ex', 'n', 's'], ['ey', 'e', 'w']].forEach(([d, a, b]) => {
+      const x = num(c[a + '_dist']), y = num(c[b + '_dist']);
+      if ((c[d + '_len_auto'] || !c[d + '_len']) && x !== null && y !== null) { c[d + '_len'] = String(+(x + y).toFixed(2)); c[d + '_len_auto'] = true; }
+    });
+  }
+  document.addEventListener('input', e => {
+    const k = e.target.dataset && e.target.dataset.k; if (!k) return;
+    const c = cur(); touch(c);
+    c[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    if (k === 'ex_len' || k === 'ey_len') c[k + '_auto'] = false;
+    if (k === 'lat' || k === 'lon') c.possrc = 'manual';
+    if (/_dist$/.test(k)) autoLen(c);
+    save();
+  });
+  document.addEventListener('change', e => { if (e.target.dataset && e.target.dataset.k) render(); });
+  document.addEventListener('click', e => {
+    const k = e.target.dataset && e.target.dataset.now; if (!k) return;
+    const c = cur(); touch(c); c[k] = utc(Date.now()); save(); render();
+  });
+
+  $('sites').onchange = () => { S.cur = $('sites').value; armDel = armWipe = false; save(); render(); window.scrollTo(0, 0); };
+  $('new').onclick = () => {
+    let n = S.sites.find(s => !s.mod);          // an untouched blank sheet is used again, not piled up
+    if (!n) { n = blank(); S.sites.push(n); }
+    n.date = today(); S.cur = n.id; armDel = false; save(); render();
+    const f = document.querySelector('[data-k="project"]'); f.focus(); f.scrollIntoView({ block: 'center' });
+    if (!gpsRun) $('gps').onclick();           // the position comes from this device
+  };
+  $('del').onclick = () => {
+    if (!armDel) { armDel = true; render(); setTimeout(() => { if (armDel) { armDel = false; render(); } }, 4000); return; }
+    armDel = false; (cur().photos || []).forEach(p => pdel(p.id));
+    S.sites = S.sites.filter(s => s.id !== S.cur);
+    if (!S.sites.length) S.sites.push(blank());
+    S.cur = S.sites[S.sites.length - 1].id; save(); render(); toast('Site deleted');
+  };
+
+  // ---- GPS (keeps the best fix over up to 30 s; tap again to keep what it has) ----
+  let gpsRun = null;
+  $('gps').onclick = () => {
+    const btn = $('gps'), say = t => $('gmsg').textContent = t;
+    if (gpsRun) { gpsRun(); return; }
+    if (!navigator.geolocation) { say('No GPS in this browser: type the position.'); return; }
+    if (window.isSecureContext === false) { say('GPS needs the app opened from its https address: type the position.'); return; }
+    let best = null, id = null, timer = null;
+    const stop = msg => {
+      if (id !== null) try { navigator.geolocation.clearWatch(id); } catch (e) {}
+      clearTimeout(timer); gpsRun = null; btn.textContent = 'GPS fix';
+      if (!best) { say(msg || 'No fix: type the position.'); return; }
+      const c = cur(); touch(c);
+      Object.assign(c, { lat: best.lat.toFixed(7), lon: best.lon.toFixed(7), acc: best.acc.toFixed(1), elev: best.elev === null ? (c.elev || '') : best.elev.toFixed(1), possrc: 'gps' });
+      save(); render(); say('Fix ±' + best.acc.toFixed(1) + ' m' + (best.elev === null ? ' (no elevation from this device)' : '') + '.');
+    };
+    gpsRun = stop; btn.textContent = 'Stop GPS'; say('Getting a GPS fix… stand at the MTU.');
+    try {
+      id = navigator.geolocation.watchPosition(p => {
+        const g = p.coords;
+        if (!best || g.accuracy < best.acc) best = { lat: g.latitude, lon: g.longitude, acc: g.accuracy, elev: g.altitude === null || g.altitude === undefined ? null : g.altitude };
+        if (best.acc <= 4) stop(); else say('±' + best.acc.toFixed(1) + ' m so far… tap Stop GPS to keep it.');
+      }, err => stop(err && err.code === 1 ? 'Location is blocked for this app: allow it in the device settings, or type the position.'
+                    : 'No GPS position (is Location switched on?): type the position.'),
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 30000 });
+    } catch (e) { stop('GPS not available here: type the position.'); return; }
+    timer = setTimeout(() => stop('No GPS fix in 30 s: try again in the open, or type the position.'), 30000);
+  };
+
+  // ---- sketch: strokes kept as flat x, y lists on a 0..1000 square, so they redraw at any size ----
+  const sk = $('sk'), ctx = sk.getContext('2d');
+  function paint(g, w, strokes) {
+    g.fillStyle = '#ffffff'; g.fillRect(0, 0, w, w);
+    g.lineWidth = Math.max(1, w / 500); g.strokeStyle = '#dfe5ee'; g.beginPath();
+    for (let i = 1; i < 20; i++) { const p = Math.round(i * w / 20) + .5; g.moveTo(p, 0); g.lineTo(p, w); g.moveTo(0, p); g.lineTo(w, p); }
+    g.stroke();
+    g.fillStyle = '#8a94a6'; g.font = '700 ' + Math.round(w / 22) + 'px sans-serif'; g.textAlign = 'center'; g.fillText('N ↑', w - w / 14, w / 14);
+    g.strokeStyle = '#14203a'; g.fillStyle = '#14203a'; g.lineWidth = Math.max(1.5, w / 190); g.lineCap = 'round'; g.lineJoin = 'round';
+    (strokes || []).forEach(s => {
+      const f = w / 1000;
+      if (s.length < 4) { g.beginPath(); g.arc(s[0] * f, s[1] * f, g.lineWidth, 0, 7); g.fill(); return; }
+      g.beginPath(); g.moveTo(s[0] * f, s[1] * f);
+      for (let i = 2; i < s.length; i += 2) g.lineTo(s[i] * f, s[i + 1] * f);
+      g.stroke();
+    });
+  }
+  function draw() {
+    const w = Math.round(sk.clientWidth * (window.devicePixelRatio || 1));
+    if (!w) return;
+    if (sk.width !== w) sk.width = sk.height = w;
+    paint(ctx, w, cur().sketch);
+  }
+  let stroke = null;
+  const at = e => { const r = sk.getBoundingClientRect(); return [Math.round(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * 1000), Math.round(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)) * 1000)]; };
+  sk.addEventListener('pointerdown', e => {
+    if (e.button) return;
+    e.preventDefault(); try { sk.setPointerCapture(e.pointerId); } catch (err) {}
+    const c = cur(); touch(c); stroke = at(e); (c.sketch = c.sketch || []).push(stroke); armWipe = false; draw();
+  });
+  sk.addEventListener('pointermove', e => {
+    if (!stroke) return;
+    const p = at(e), n = stroke.length;
+    if (Math.abs(p[0] - stroke[n - 2]) + Math.abs(p[1] - stroke[n - 1]) < 4) return;
+    stroke.push(p[0], p[1]); draw();
+  });
+  const endStroke = () => { if (stroke) { stroke = null; save(); render(); } };
+  sk.addEventListener('pointerup', endStroke); sk.addEventListener('pointercancel', endStroke);
+  $('undo').onclick = () => { const c = cur(); if (c.sketch && c.sketch.length) { c.sketch.pop(); touch(c); save(); render(); } };
+  $('wipe').onclick = () => {
+    if (!armWipe) { armWipe = true; render(); setTimeout(() => { if (armWipe) { armWipe = false; render(); } }, 4000); return; }
+    armWipe = false; const c = cur(); c.sketch = []; touch(c); save(); render();
+  };
+  window.addEventListener('resize', draw);
+
+  // ---- files ----
+  const mine = () => S.sites.filter(s => s.mod);
+  function csv() {
+    const q = v => { v = v === true ? 'yes' : v === false || v === undefined || v === null ? '' : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+    const rows = mine().sort((a, b) => (a.date || '').localeCompare(b.date || '') || (a.site || '').localeCompare(b.site || ''))
+      .map(s => KEYS.map(k => q(k === 'lat_dd' ? dd(s.lat, 90) : k === 'lon_dd' ? dd(s.lon, 180) : k === 'pictures' ? (s.photos || []).length : s[k])).join(','));
+    return KEYS.join(',') + '\n' + rows.join('\n') + '\n';
+  }
+  // the sheet file carries the pictures themselves (data), so one file holds everything for the viewer
+  const sheetFile = () => JSON.stringify({ format: 'mtsite', version: 1, exported_utc: utc(Date.now()),
+    sites: mine().map(s => Object.assign({}, s, { photos: (s.photos || []).map(p => Object.assign({}, p, { data: PH[p.id] || '' })) })) }, null, 1);
+  const baseName = () => 'MTSites_' + ((cur().project || 'project').replace(/[^\w-]+/g, '_')) + '_' + today();
+  function showCsv() { const ta = $('csvout'); ta.hidden = false; ta.value = csv(); ta.focus(); ta.select(); }
+  $('share').onclick = async () => {
+    if (!mine().length) { toast('Nothing entered yet.'); return; }
+    const list = [[baseName() + '.json', sheetFile(), 'application/json'], [baseName() + '.csv', csv(), 'text/csv']];
+    const names = list.map(x => x[0]).join(', ');
+    try {
+      const files = list.map(([n, t, m]) => new File([t], n, { type: m }));
+      if (navigator.canShare && navigator.canShare({ files })) { await navigator.share({ files, title: baseName() }); toast('Shared ' + names); return; }
+    } catch (e) { if (e && e.name === 'AbortError') return; }
+    try {
+      list.forEach(([n, t, m], i) => setTimeout(() => {
+        const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([t], { type: m })); a.download = n;
+        document.body.appendChild(a); a.click(); a.remove();
+      }, i * 500));
+      toast('Saved ' + names);
+    } catch (e) { showCsv(); }
+  };
+  $('copy').onclick = () => { try { navigator.clipboard.writeText(csv()).then(() => toast('CSV copied'), showCsv); } catch (e) { showCsv(); } };
+  $('print').onclick = () => window.print();
+  $('imp').onclick = () => $('impf').click();
+  $('impf').onchange = () => {
+    const f = $('impf').files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      let d = null; try { d = JSON.parse(rd.result); } catch (e) {}
+      if (!d || d.format !== 'mtsite' || !Array.isArray(d.sites)) { toast('Not an MT site sheet file.'); return; }
+      let n = 0;
+      d.sites.forEach(s => {
+        if (!s || !s.id) return;
+        const i = S.sites.findIndex(x => x.id === s.id);
+        if (i >= 0 && (s.mod || 0) <= (S.sites[i].mod || 0)) return;
+        s.photos = (s.photos || []).filter(p => p && p.id).map(p => { if (p.data) pput(p.id, p.data).catch(() => {}); return { id: p.id, t: p.t }; });
+        if (i < 0) S.sites.push(s); else S.sites[i] = s;
+        n++;
+      });
+      if (n) { S.sites = S.sites.filter(s => s.mod); S.cur = S.sites[S.sites.length - 1].id; }
+      save(); render(); toast(n ? n + (n === 1 ? ' site' : ' sites') + ' loaded' : 'Nothing newer in that file');
+    };
+    rd.readAsText(f); $('impf').value = '';
+  };
+
+  function tick() { $('utc').textContent = utc(Date.now()) + ' UTC'; }
+  render(); tick(); setInterval(tick, 15000);
+  pstore('readonly', s => s.getAllKeys()).then(keys => Promise.all((keys || []).map(k => pstore('readonly', s => s.get(k)).then(v => { PH[k] = v; }))))
+    .then(render, () => {});
+})();
+</script>
+<p class="noprint" style="text-align:center;color:#8a94a6;font:11px system-ui,sans-serif;margin:0 0 10px">MT Site Sheet build 2026-11-17 03ac3d3</p>
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+  navigator.serviceWorker.register('sw.js').then(function (r) { r.update(); }).catch(function () {});
+}
+</script>
+</body>
+</html>
